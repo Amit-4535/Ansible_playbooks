@@ -1,0 +1,21 @@
+---
+- name: apache2 service stopping
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: stopping apache2 service
+      service:
+        name: apache2
+        state: stopped
+
+    - name: uninstalling the apache2 package
+      apt:
+        name: apache2
+        state: absent
+
+    - name: printing the message to the user that apache2 is uninstalled
+      debug:
+        msg: "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! APACHE2 IS UNINSTALLED SUCCESSFUL !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+

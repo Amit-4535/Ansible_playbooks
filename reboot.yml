@@ -1,0 +1,13 @@
+---
+- name: reboot the system
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: reboot/restart all the managed nodes
+      reboot:
+
+    - name: system rebbot message
+      debug:
+        msg: "!!!!!!!!!!!________    server restarted successfully       _________!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"

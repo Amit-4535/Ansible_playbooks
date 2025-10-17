@@ -1,0 +1,15 @@
+---
+- name: installing apache2 service on managed node
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: installing apache2 service on managed node
+      apt:
+        name: apache2
+        state: present
+
+    - name: printing message that apache2 is running
+      debug:
+        msg: ------ "Apache2 service is runnning on managed node ------------"
