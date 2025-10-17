@@ -1,0 +1,21 @@
+---
+- name: installing packages and restarting packages using variable
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  vars:
+    pkg_name: apache2
+    service_name: apache2
+  tasks:
+    - name: installing the apache2 package using variable
+      apt:
+        name: "{{pkg_name}}"
+        state: present
+    - name: starting the apache2 using variable
+      service:
+        name: "{{service_name}}"
+        state: started
+    - name: printing the message
+      debug:
+        msg: "__________________________________________  apache2 is installed and started using the variable   __________________________________________________"
