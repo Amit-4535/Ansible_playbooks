@@ -1,0 +1,10 @@
+---
+- name: system variable informations
+  hosts: demo
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: getting the managed node ip address with system variables
+      debug:
+        msg: "The managed node is  : {{ansible_hostname}}"
