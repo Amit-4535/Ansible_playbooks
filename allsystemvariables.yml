@@ -1,0 +1,28 @@
+---
+- name: getting all the information of running all the systems variables on managed nodes
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: printing the name of ansible hostname
+      debug:
+        msg: " The System name is: {{ansible_hostname}}"
+    - name: ansible all ipv4 address
+      debug:
+        msg: " the ansible all ipv4 address is : {{ansible_all_ipv4_addresses}}"
+    - name: ansible default ipv4 address
+      debug:
+        msg: " the system default ipv4 address is : {{ansible_default_ipv4}}"
+    - name: ansible distribution
+      debug:
+        msg: "the ansible distribution is : {{ansible_distribution}}"
+    - name: ansible total memory in mb
+      debug:
+        msg: "The ansible total memory is {{ansible_memtotal_mb}}"
+    - name: the nodename 
+      debug: 
+        msg: "the nodename is : {{ansible_nodename}}"
+    - name: ansible python version
+      debug:
+        msg: "the ansible python version is : {{ansible_python_version}}"
