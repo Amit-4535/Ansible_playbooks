@@ -1,0 +1,11 @@
+---
+- name: creating file on managed node
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: creating abc.txt file on managed node
+      file:
+        path: /home/ubuntu/abc.txt
+        state: touch
