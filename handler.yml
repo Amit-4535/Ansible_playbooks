@@ -1,0 +1,23 @@
+---
+- name: Handler playbook
+  hosts: demo
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: installing apache2 and starting service using the handler
+      apt:
+        name: apache2
+        state: present
+      notify:
+        - start apache2
+
+  handlers:
+    - name: start apache2
+      service:
+        name: apache2
+        state: started
+
+    - name: printing message that apache2 is running
+      debug:
+        msg: "________________     Apache2 is running now ___________ Happy Programing ________________________"
