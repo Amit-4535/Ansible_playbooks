@@ -1,0 +1,13 @@
+---
+- name: creating folder on managed node
+  hosts: demo
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: creating the folder on managed node
+      file:
+        path: /home/ubuntu/Amitfolder
+        state: directory
+        mode: 0755
+
