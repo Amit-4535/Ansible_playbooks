@@ -1,0 +1,19 @@
+---
+- name: playbook of ignore error
+  hosts: demo
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: this task will fail
+      command: /bin/false           # this command is always failing that is why we used ignore error concept here
+      ignore_errors: yes 
+
+    - name: creating demo.txt file on managed nodes
+      file:
+        path: /home/demo.txt
+        state: touch
+
+    - name: printing the message
+      debug:
+        msg: "the file is created successfully"
