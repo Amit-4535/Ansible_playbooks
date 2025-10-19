@@ -1,0 +1,22 @@
+---
+- name: creating multiple users by using the loop
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: creating multiple users at a single time / no need to use multiple tasks
+      user:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - Amit
+        - Namrata
+        - Megha
+        - aai
+        - nana
+
+    - name: user creation successful message
+      debug:
+        msg: "___________________      All users are created successfully       _________________"
+        
