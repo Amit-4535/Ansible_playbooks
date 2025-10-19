@@ -1,0 +1,46 @@
+#🧩 Concept
+
+#Normally, if one host fails, Ansible will continue executing on the other hosts.
+#But when you set:
+
+#any_errors_fatal: true
+
+
+#👉 even if one single host fails, Ansible will immediately stop the entire play for all other hosts — no matter what.
+
+#It’s useful in critical deployments (like database schema changes, system reboots, etc.) where consistency across hosts is essential.
+
+
+
+---
+- name: Demo of any_errors_fatal
+  hosts: demo
+  become: yes
+  gather_facts: no
+  any_errors_fatal: true
+
+  tasks:
+    - name: Task that fails on one node
+      command: /bin/false
+      when: inventory_hostname == "172.31.29.3"
+
+    - name: Task that runs only if previous succeeded
+      debug:
+        msg: "All hosts are healthy!"
+
+
+          #Explanation of Your Output
+
+          #172.31.29.3
+
+          #Ran the /bin/false command → exited with a non-zero return code → task failed.
+
+          #172.31.29.39
+
+          #Was supposed to skip that task (because of the when condition).
+
+          #But as soon as one host (172.31.29.3) failed,
+          #Ansible saw any_errors_fatal: true → immediately stopped the entire play for all hosts.
+
+          #No next task was executed, even though 172.31.29.39 didn’t fail —
+          #this is the key behavior of any_errors_fatal.
