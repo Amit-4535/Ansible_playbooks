@@ -1,0 +1,22 @@
+---
+- name: changed_when demo
+  hosts: demo
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Check if the file exists
+      stat:
+        path: /tmp/testfile
+      register: file_status
+
+    - name: Create the file if not exists
+      file:
+        path: /tmp/testfile
+        state: touch
+      changed_when: not file_status.stat.exists
+
+    - name: Display message
+      debug:
+        msg: "File checked or created successfully!"
+
