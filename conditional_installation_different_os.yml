@@ -1,0 +1,37 @@
+---
+- name: installation of apached on different os
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: installing apache2 on ubuntu servers
+      apt:
+        name: apache2
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+    - name: starting service on ubuntu  node
+      service:
+        name: apache2
+        state: started
+      when: ansible_os_family == "Debian"
+    - name: success message
+      debug:
+        msg: "__________________________apache2 is installed on ubuntu server _____________________"
+      when: ansible_os_family == "Debian"
+
+    - name: installing apache2 service on redhat machine
+      yum:
+        name: httpd
+        state: present
+      when: ansible_os_family == "RedHat"
+    - name: starting httd service
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+    - name: success message
+      debug:
+        msg: "________________________Installation completed on Redhat machine____________________"
+      when: ansible_os_family == "RedHat"
