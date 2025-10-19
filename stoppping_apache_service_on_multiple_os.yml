@@ -1,0 +1,27 @@
+---
+- name: stop working apache service on multiple os
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: uninstall apache2 on ubuntu server
+      apt:
+        name: apache2
+        state: absent
+      when: ansible_os_family == "Debian"
+    - name: uninstalled message
+      debug:
+        msg: "____________________ Apache2 is uninstalled successfully ________________"
+      when: ansible_os_family == "Debian"
+
+    - name: uninstalling httd service on redhat server
+      yum:
+        name: httpd
+        state: absent
+      when: ansible_os_family == "RedHat"
+    - name: uninstalled message
+      debug:
+        msg: "_____________ uninstalled httd service from RedHat machine  _______________________"
+      when: ansible_os_family == "RedHat"
+
