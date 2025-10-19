@@ -8,6 +8,7 @@
     - name: check the usage of root directory
       command: df -h /
       register: disk_output
+        # in this current situation --> on my both the managed node the disk file system, the usage is more than the 15%, so now below task will be failed as expected
 
     - name: fail if disk usage is more than 15%
       debug:
