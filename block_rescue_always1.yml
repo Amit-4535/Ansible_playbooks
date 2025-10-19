@@ -1,0 +1,27 @@
+---
+- name: Use block to group tasks safely
+  hosts: demo
+  become: yes
+  tasks:
+    - block:
+        - name: Create directory
+          file:
+            path: /tmp/demo_dir
+            state: directory
+
+        - name: Create a test file
+          copy:
+            dest: /tmp/demo_dir/test.txt
+            content: "Hello from block section"
+
+      rescue:
+        - name: Something went wrong
+          debug:
+            msg: "Error occurred — directory or file creation failed."
+
+      always:
+        - name: Always clean up temp files
+          file:
+            path: /tmp/demo_dir
+            state: absent
+

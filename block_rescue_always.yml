@@ -1,0 +1,47 @@
+
+#🧠 Concept
+
+#block: → Your main set of tasks (like the “try” block).
+
+  #rescue: → Runs only if something fails in the block.
+
+  #always: → Runs every time — success or failure.
+
+
+
+
+---
+- name: Demo of block, rescue, and always
+  hosts: demo
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - block:
+        - name: Try installing an invalid package (will fail)
+          apt:
+            name: invalidpackage
+            state: present
+          when: ansible_os_family == "Debian"
+
+        - name: Install correct package (won't reach here)
+          apt:
+            name: apache2
+            state: present
+          when: ansible_os_family == "Debian"
+
+      rescue:
+        - name: Rescue - handle failure
+          debug:
+            msg: "Installation failed — handled gracefully in rescue block."
+
+        - name: Try installing the correct package
+          apt:
+            name: apache2
+            state: present
+          when: ansible_os_family == "Debian"
+
+      always:
+        - name: Always - runs regardless of success or failure
+          debug:
+            msg: "Cleanup or logging completed — this always runs.."
