@@ -1,0 +1,36 @@
+---
+- name: installing multiple packages by using the loops
+  hosts: demo
+  become: yes
+  gather_facts: yes
+  connection: ssh
+  tasks:
+    - name: installation of multiple service
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+      loop:
+        - apache2
+        - tree
+        - docker.io
+        - curl
+        - unzip
+
+    - name: installation on redhat servers
+      yum:
+        name: "{{ item }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+      loop:
+        - httpd
+        - tree
+        - docker
+        - curl-minimal
+        - unzip
+
+
+    - name: successful message
+      debug:
+        msg: "installation of multiple services is completed"
