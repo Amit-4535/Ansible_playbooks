@@ -1,0 +1,40 @@
+---
+- name: Restart Apache safely using block, rescue, and always
+  hosts: demo
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - block:
+        - name: Try to restart Apache service
+          service:
+            name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+            state: restarted
+
+        - name: Confirm Apache is running
+          shell: |
+            systemctl is-active {{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}
+          register: apache_status
+          changed_when: false
+          failed_when: apache_status.stdout != "active"
+
+      rescue:
+        - name: Rescue - Install Apache if restart failed
+          package:
+            name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+            state: present
+
+        - name: Start Apache after installation
+          service:
+            name: "{{ 'apache2' if ansible_os_family == 'Debian' else 'httpd' }}"
+            state: started
+
+        - name: Print rescue message
+          debug:
+            msg: "Apache was not running, installed and started successfully in rescue block."
+
+      always:
+        - name: Always - Log task completion
+          debug:
+            msg: "✅ Apache check process completed on {{ inventory_hostname }}"
+
