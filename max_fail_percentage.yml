@@ -1,0 +1,25 @@
+#By default, if one host fails, Ansible keeps going and runs tasks on the rest.
+#But sometimes, you want to stop the whole play early if too many hosts fail —
+#that’s exactly what max_fail_percentage does.
+
+
+---
+- name: Demo of max_fail_percentage
+  hosts: demo
+  become: yes
+  gather_facts: no
+  max_fail_percentage: 25
+
+  tasks:
+    - name: Simulate failure on one node
+      command: /bin/false
+      when: inventory_hostname == '172.31.29.3'
+
+    - name: Simulate success on others
+      command: /bin/true
+      when: inventory_hostname != '172.31.29.3'
+
+    - name: This task will only run if failure threshold not crossed
+      debug:
+        msg: "Play is continuing successfully!"
+
