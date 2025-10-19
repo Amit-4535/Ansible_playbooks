@@ -1,0 +1,15 @@
+---
+- name: failed_when demo
+  hosts: demo
+  gather_facts: yes
+  connection: ssh
+  become: yes
+  tasks:
+    - name: check the usage of root directory
+      command: df -h /
+      register: disk_output
+
+    - name: fail if disk usage is more than 15%
+      debug:
+        msg: "disk usage is high : {{ disk_output.stdout }}"
+      failed_when: " '15%' in disk_output_stdout "
