@@ -1,0 +1,51 @@
+                                                                                Ansible modules
+
+
+
+Modules are small programs that Ansible runs on your remote nodes to perform tasks like installing software, copying files, creating users, restarting services, etc.
+
+🔥 Categories of Modules (Most Common)
+Category	         Examples	                    Purpose
+System	            user, group, hostname, cron	            Manage users, groups, cron jobs, etc.
+Package	            yum, apt, dnf, pip	                    Install/uninstall packages
+Service	            service, systemd	                    Start/stop/enable services
+File	            copy, template, file, fetch	            Manage files and directories
+Command/Shell	    command, shell, raw	                    Run shell/command instructions
+Networking	    firewalld, ufw, iptables	            Manage firewall, ports, etc.
+Cloud	            ec2, gcp, azure_rm 	                    Manage cloud resources
+Docker/K8s	    docker_container, k8s	            Manage containers and Kubernetes
+Utilities	    ping, setup, debug, wait_for	    Utility operations
+
+
+examples
+
+
+1)	Ping test connections   ansible all -m ping
+
+2)	Yum/apt install package   ansible all -b -m yum -a "name=httpd state=present"
+
+3)	Service module to mange the service  ansible all -b -m service -a "name=httpd state=started enabled=yes"
+
+4)	Copy module / copy the files from master to nodes  ansible all -b -m copy -a "src=/home/ec2-user/test.txt dest=/tmp/test.txt"
+
+5)	File  Set permission/ownership or delete the file  ansible all -b -m file -a "path=/tmp/test.txt state=absent"
+
+6)	User  create or delete the user  ansible all -b -m user -a "name=amit shell=/bin/bash"
+
+7)	Cron  create a cronn job  ansible all -b -m cron -a "name='backup job' minute=0 hour=2 job='/usr/bin/backup.sh'"
+
+8)	Setup  get the system information  ansible all -m setup
+
+
+
+
+View all modules  ansible-doc -l   # List all available modules
+
+
+If you want to get the information of any module then  ansible-doc yum(module name)
+
+This command will show you available modules in system  ansible-doc -l | wc -l
+
+View all modules name   ansible-doc -l
+
+Check the modules location   Use ansible-doc -F <module> to find its source file:
