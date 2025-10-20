@@ -1,0 +1,27 @@
+                                                                            DRY-RUN
+
+
+Dry run means we will check the playbook is formatted correctly or not, before its actual execution
+
+Command to check is  ansible-playbook playbookname.yml - -check
+
+this command will execute and it will provide you the details that whether this playbook is formatted correctly or not..
+
+
+
+
+in this below example --> if you run the command -- ansible-playbook playbookname.yml --check
+then this will check only the playbook is formatted correctly or not? it is not actually executing this playbook on managed node, but through above command you will get that pre validation check of the playbook..
+
+
+
+---
+- name: checking the dry run
+  hosts: demo
+  gather_facts: no
+  tasks:
+    - name: creating user
+      user:
+        name: Amit
+        state: present
+
