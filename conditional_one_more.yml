@@ -1,0 +1,42 @@
+---
+- name: Conditionally install web servers based on OS
+  hosts: demo
+  become: yes
+  gather_facts: yes
+
+  tasks:
+    - name: Install Apache on RedHat/CentOS
+      yum:
+        name: httpd
+        state: present
+      when: ansible_os_family == "RedHat"
+      register: apache_result
+
+   
+    - name: Install Nginx on Ubuntu/Debian
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+      register: nginx_result
+
+    - name: Start Apache if installed
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      when: apache_result is defined and apache_result.changed
+
+    - name: Start Nginx if installed
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+      when: nginx_result is defined and nginx_result.changed
+
+    - name: Warn if server has low memory
+      debug:
+        msg: "Warning: This server has less than 2 GB of RAM."
+      when: ansible_memtotal_mb < 2048
+
