@@ -1,0 +1,28 @@
+                                                                      Host Pattern 
+
+
+Through the host pattern we will get the host details which is available in your hosts file.. (basically this will gives you the details of hosts, which hosts at what number and all the host details by the commands..)
+
+
+
+Commands..
+
+
+0 represent the 1st host, 1 represent the second host details and so on, -1 is represent the last host detail, you can also see the multiple group host details as mentioning the group1:group2
+
+
+-	Ansible demo - - list-hosts
+Getting all the available hosts
+-	Ansible demo[0] - -list-hosts
+Getting first server detail
+-	Ansible demo[1] - -list-hosts
+Getting the second server detail
+-	Ansible demo[-1] - - list-hosts
+Getting last server detail
+-	Ansible demo[10] - -list-hosts
+Getting 11th host detail
+-	Ansible demo[0:5] - -list-hosts
+Getting 1st to 6th host detail
+-	Ansible demo1:demo2 - -list-hosts
+Getting group 1 and group 2 details
+
