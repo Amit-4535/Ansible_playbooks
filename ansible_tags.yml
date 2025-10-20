@@ -1,0 +1,44 @@
+
+
+#Below are some commands to run the tags and also skip  the tags..
+#ansible-playbook tags.yml --tags install_git
+#ansible-playbook tags.yml --tags install_docker
+#ansible-playbook tags.yml --skip-tags install_docker
+
+
+
+
+---
+- name: ansible tags playbook
+  hosts: demo
+  become: yes
+  connection: ssh
+  gather_facts: yes
+  tasks:
+    - name: installing apache2
+      apt:
+        name: apache2
+        state: present
+      tags: apache2
+
+    - name: installing docker
+      apt:
+        name: docker.io
+        state: present
+      tags: docker
+
+    - name: install git
+      apt:
+        name: git
+        state: present
+      tags: git
+
+    - name: install tree
+      apt:
+        name: tree
+        state: present
+      tags: tree
+
+    - name: only the message
+      debug:
+        msg: "above all the installation will be completed through the tags"
