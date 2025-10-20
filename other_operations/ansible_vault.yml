@@ -1,0 +1,30 @@
+                                                                        Ansible-Vaults
+
+
+
+Vault is used to encrypt and decrypt the files, it used the AES-256 method to encrypt and decrypt the files..
+
+
+commands of encryption and the decryptions
+
+-	encrypt the file by command 
+ansible-vault encrypt filename
+(this will ask you to enter the password, once entered this command will encrypt the content which is available in file)
+
+-	decrypt the encrypted file by command 
+ansible-vault decrypt filename
+(once enter this command it will ask you for the password, once entered the content will be decrypted)
+
+-	encrypt file when creating
+ansible-vault create filename
+(once you enter this command at the file creation time it will ask you to enter the password, once enter, it will encrypt the file)
+
+-	ansible-vault rekey filename
+(change the password of the encrypted file)
+
+-	ansible-vault edit filename
+(this command will helpful to edit the file, once enter the password it will take you to the file and then you can edit or make the changes in the file..)
+
+-	ansible-vault view filename
+(once enter the command it will ask you for the password, once entered then it will show you the content of the file)
+
