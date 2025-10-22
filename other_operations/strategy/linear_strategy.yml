@@ -1,0 +1,8 @@
+---
+- name: Linear Strategy Test
+  hosts: all
+  strategy: linear
+  tasks:
+    - name: Sleep
+      command: sleep 5
+

@@ -1,0 +1,9 @@
+---
+- name: Demo Strategy Usage
+  hosts: all
+  strategy: free
+  tasks:
+    - name: Sleep for different times
+      command: sleep {{ item }}
+      loop: [5, 3, 1]
+
