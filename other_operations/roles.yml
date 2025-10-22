@@ -1,0 +1,8 @@
+---
+- name: Apply Apache role
+  hosts: demo
+  become: yes
+
+  roles:
+    - apache
+
