@@ -1,0 +1,12 @@
+---
+- name: gather_fact use case
+  hosts: demo
+  become: yes
+  tasks:
+    - name: print the os family
+      debug:
+        var: ansible_os_family
+
+    - name: print the ip address
+      debug:
+        var: ansible_default_ipv4_address
