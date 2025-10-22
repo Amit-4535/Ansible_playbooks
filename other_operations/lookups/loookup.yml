@@ -1,0 +1,28 @@
+---
+- name: Demonstrate Ansible Lookups
+  hosts: demo
+  gather_facts: yes
+  vars:
+    username_list: "{{ lookup('file', 'user.txt').splitlines() }}"
+    system_user: "{{ lookup('env', 'USER') }}"
+    my_hostname: "{{ lookup('pipe', 'hostname') }}"
+    secret_password: "{{ lookup('password', 'password.txt') }}"
+
+  tasks:
+    - name: Display usernames from user.txt
+      debug:
+        msg: "Found user: {{ item }}"
+      loop: "{{ username_list }}"
+
+    - name: Show environment variable USER
+      debug:
+        msg: "Current system user is: {{ system_user }}"
+
+    - name: Show hostname using pipe
+      debug:
+        msg: "The hostname of control node is: {{ my_hostname }}"
+
+    - name: Show secret password (fake example)
+      debug:
+        msg: "The password from file is: {{ secret_password }}"
+
