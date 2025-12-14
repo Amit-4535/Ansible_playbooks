@@ -1,40 +1,24 @@
 ---
-- name: gather facts demo
+- name: the gather facts demo
   hosts: demo
   become: yes
+  gather_facts: yes
   tasks:
-     
-    - name: Print OS type and version
-      debug:
-        msg: "OS: {{ ansible_distribution }} {{ ansible_distribution_version }} ({{ ansible_os_family }})"
-
-    - name: Print IP address
-      debug:
-        msg: "IP Address: {{ ansible_default_ipv4.address }}"
-
-    - name: Print hostname
-      debug:
-        msg: "Hostname: {{ ansible_hostname }}"
-
-    - name: Print CPU info
-      debug:
-        msg: "CPU: {{ ansible_processor_cores }} cores"
-
-    - name: Print memory info
-      debug:
-        msg: "Memory: {{ ansible_memory_mb.real.total }} MB"
-
-    - name: Print disk space info (root partition)
-      debug:
-        msg: "Disk Size (root): {{ ansible_mounts[0].size_total | human_readable }}"
-
-    - name: Print network interfaces
-      debug:
-        var: ansible_interfaces
-
-  handlers:
-    - name: Restart Apache
-      service:
-        name: "{{ web_service }}"
-        state: restarted
-
+  - name: the distribution and ditstribution version
+    debug:
+        msg: "the distribution and distribution version is {{ ansible_distribution }} {{ ansible_distribution_version }}"
+  - name: the address 
+    debug: 
+        msg: "the address and addresses is {{ ansible_default_ipv4.address }} {{ ansible_all_ipv4_addresses }}"
+  - name: cpu information
+    debug:
+        msg: "the cpu detail is {{ ansible_processor_cores }}"
+  - name: the real mb
+    debug:
+        msg: "the real mb is {{ ansible_memory_mb.real.total }}"
+  - name: disk space
+    debug:
+        msg: "disk size is {{ ansible_mounts[0].size_total | human_readable }}"
+  - name: the memory
+    debug:
+        msg: "the memory is {{ ansible_memtotal_mb }}"
