@@ -4,6 +4,10 @@
 #ansible-playbook tags.yml --tags install_git
 #ansible-playbook tags.yml --tags install_docker
 #ansible-playbook tags.yml --skip-tags install_docker
+#ansible-playbook playbookname.yml --tags apache2
+#ansible-playbook playbookname.yml --skip-tags nginx
+#ansible-playbook playbookname.yml --tags "apache2,nginx"
+#ansible-playbook playbookname.yml --skip-tags "curl,git"
 
 
 
