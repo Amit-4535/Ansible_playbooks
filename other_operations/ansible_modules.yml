@@ -1,6 +1,6 @@
                                                                                 Ansible modules
 
-
+idempotency is present in module, that means we can not do the repeatative tasks again.
 
 Modules are small programs that Ansible runs on your remote nodes to perform tasks like installing software, copying files, creating users, restarting services, etc.
 
