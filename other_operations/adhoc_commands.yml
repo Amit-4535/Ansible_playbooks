@@ -1,4 +1,5 @@
 Ad-hoc commands are used to perform a single task quickly across one or more hosts.
+idempotency is not present in adhoc command.. means can do the repeatative tasks
 
 They're ideal for:
 •	Testing connectivity
