@@ -1,0 +1,60 @@
+--limit in ansible 
+
+--limit is used to restrict the execution of a playbook or ad-hoc command to a specific set of hosts, even if the inventory contains many hosts.
+
+In short:
+👉 Inventory may have 100 servers
+👉 Playbook targets all
+👉 --limit lets you run on only selected ones
+
+Why do we use --limit? (Very Important)
+🔹 1. Prevent accidental changes ❗
+
+You don’t want to restart Apache on all production servers by mistake.
+
+ansible-playbook site.yml --limit web01
+
+Testing before full rollout
+
+Run on 1 server first, then expand.
+
+--limit web01
+--limit web01,web02
+--limit web
+
+
+Partial failure recovery
+
+If a playbook failed on some hosts:
+
+--limit failed_hosts
+Fix → rerun only failed nodes
+
+
+Emergency production fixes
+Quick patch on specific host only, not entire group.
+
+
+How --limit works (Technical)
+
+--limit accepts host patterns, same as inventory patterns.
+
+Common patterns:
+Pattern	Meaning
+web01	Single host
+web	Group
+web01,web02	Multiple hosts
+web[0:2]	Range
+!web03	Exclude host
+web:&prod	Intersection
+web:!prod	Exclusion
+
+
+examples --
+
+ansible-playbook apache.yml --limit demo    -- Limit in playbook execution
+ansible-playbook apache.yml --limit demo[0]   -- Limit to single host
+ansible-playbook apache.yml --limit demo1,demo2   -- Limit multiple hosts
+ansible-playbook apache.yml --limit 'all:!demo3'     -- Exclude a host
+ansible all -m ping --limit web     -- Ad-hoc command with limit
+
