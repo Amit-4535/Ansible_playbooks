@@ -1,0 +1,41 @@
+the question is --
+let us say i have 10 group of servers and i have executed the playbook, so this playbook is completely run, but the issue is -- the task from that playbook is ran on some system but failed also on some system, 
+so how can i get the information of those failed nodes??
+
+From the playbook output (default way)
+At the end of every playbook run, Ansible prints a PLAY RECAP.
+Example:
+PLAY RECAP ********************************************************************
+server1 : ok=10  changed=5  unreachable=0  failed=0
+server2 : ok=7   changed=3  unreachable=0  failed=1
+server3 : ok=10  changed=5  unreachable=0  failed=0
+server4 : ok=6   changed=2  unreachable=1  failed=0
+How to identify failed nodes
+Look at:
+failed > 0
+unreachable > 0
+From above:
+❌ server2 → task failed
+❌ server4 → unreachable
+👉 This is the first and simplest place to check.
+
+
+Using --limit to rerun only failed nodes
+Ansible automatically creates a special group called failed (and unreachable) during execution.
+Rerun playbook only on failed hosts:
+ansible-playbook site.yml --limit failed
+
+
+For unreachable hosts:
+ansible-playbook site.yml --limit unreachable
+👉 Very useful in real production when you don’t want to rerun on all 10 groups again.
+
+
+Using --list-hosts with limit
+To just see which hosts failed, without running anything:
+ansible-playbook site.yml --limit failed --list-hosts
+hosts (2):
+  server2
+  server5
+
+
