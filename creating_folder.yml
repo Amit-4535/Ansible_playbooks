@@ -9,5 +9,5 @@
       file:
         path: /home/ubuntu/Amitfolder
         state: directory
-        mode: 0755
+        mode: '0755'
 
