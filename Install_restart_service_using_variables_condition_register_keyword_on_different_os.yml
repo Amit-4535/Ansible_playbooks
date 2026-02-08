@@ -1,0 +1,41 @@
+
+
+
+---
+- name: installing apache2 pkg using variable
+  hosts: all
+  become: yes
+  vars:
+    pkg_apache: apache2
+    pkg_httpd: httpd
+  tasks:
+    - name: installing apache2 on debian family.
+      apt:
+        name: "{{ pkg_apache }}"
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+      register: apache_result
+
+    - name: installing apache2 on redhat family
+      yum:
+        name: "{{ pkg_httpd }}"
+        state: present
+      when: ansible_os_family == "RedHat"
+      register: httpd_result
+
+    - name: starting apache2 on debian if installed
+      service:
+        name: "{{ pkg_apache }}"
+        state: started
+        enabled: yes
+      when: apache_result is defined and apache_result.changed
+
+    - name: starting httpd on redhat family if installed
+      service:
+        name: "{{ pkg_httpd }}"
+        state: started
+        enabled: yes
+      when: httpd_result is defined and httpd_result.changed
+
+
