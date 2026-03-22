@@ -1,0 +1,47 @@
+what is the use of the shell and the command module..
+
+
+The main difference between the command and shell modules in Ansible is how they execute commands on the managed nodes.
+
+The command module runs commands directly on the system without invoking a shell, whereas the shell module executes commands through a shell like /bin/bash.
+
+Because of this, the shell module supports shell features like pipes, redirection, environment variables, and wildcards, while the command module does not.
+
+From a best practices perspective, command is more secure and predictable, so it should be preferred unless shell functionality is explicitly required.
+
+
+🔍 Key Differences (Important to mention)
+Feature	                      command	      shell
+Uses shell?	                  ❌ No        	✅ Yes
+Supports pipes (`	                `)	    ❌ No
+Redirection (>, >>)            	❌ No      	✅ Yes
+Environment variables ($HOME)  	❌ No      	✅ Yes
+Security	                  ✅ Safer	        ⚠️ Less safe
+Idempotency	                    Better	      Risky
+
+
+Using command (Recommended)
+- name: Check uptime
+  command: uptime
+
+
+Using shell (When needed)
+
+- name: Get disk usage with filter
+  shell: df -h | grep /dev/sda1
+
+👉 This works only with shell because of the pipe (|).
+
+
+🎯 When to Use What
+Use command when:
+Running simple commands
+No need for shell features
+You want safer and cleaner execution
+
+Use shell when:
+You need:
+Pipes (|)
+Redirection (>)
+Wildcards (*)
+Environment variables ($VAR)
